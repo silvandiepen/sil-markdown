@@ -1,0 +1,43 @@
+{
+  "name": "@sil/markdown",
+  "version": "1.0.0",
+  "main": "dist/sil-markdown.umd.js",
+  "module": "dist/sil-markdown.esm.js",
+  "unpkg": "dist/sil-markdown.min.js",
+  "browser": {
+    "./sfc": "src/sil-markdown.vue"
+  },
+  "scripts": {
+    "build": "npm run build:unpkg & npm run build:es & npm run build:umd",
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/sil-markdown.umd.js",
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/sil-markdown.esm.js",
+    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/sil-markdown.min.js"
+  },
+  "dependencies": {
+    "markdown-it": "^6.0.1",
+    "markdown-it-abbr": "^1.0.3",
+    "markdown-it-deflist": "^2.0.1",
+    "markdown-it-emoji": "^1.1.1",
+    "markdown-it-footnote": "^2.0.0",
+    "markdown-it-ins": "^2.0.0",
+    "markdown-it-katex": "^2.0.3",
+    "markdown-it-mark": "^2.0.0",
+    "markdown-it-sub": "^1.0.0",
+    "markdown-it-sup": "^1.0.0",
+    "markdown-it-task-lists": "^2.0.1",
+    "markdown-it-toc-and-anchor": "^4.1.2",
+    "markdown-it-meta": "0.0.1"
+  },
+  "devDependencies": {
+    "minimist": "^1.2.0",
+    "rollup": "^0.57.1",
+    "rollup-plugin-buble": "^0.19.6",
+    "rollup-plugin-uglify-es": "0.0.1",
+    "rollup-plugin-vue": "^4.6.1",
+    "vue": "^2.5.22",
+    "vue-template-compiler": "^2.5.22"
+  },
+  "author": "Sil van Diepen",
+  "license": "ISC",
+  "description": ""
+}
