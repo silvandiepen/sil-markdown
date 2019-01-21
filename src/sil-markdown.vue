@@ -153,28 +153,27 @@ export default {
     renderMeta(meta, slots, createElement) {
       const _this = this;
       let newContent = [];
-      if (Object.keys(meta).length > 0 && slots.default) {
-        slots.default.forEach(el => {
-          if (el.data) {
-            Object.keys(meta).forEach(tag => {
-              let newEl;
-              if (el.data.attrs) {
-                if (tag === el.data.attrs.meta) {
+      if (Object.keys(meta).length && slots.default) {
+        newContent = slots.default.map(slot => {
+          if (slot.data) {
+            if (slot.data.attrs) {
+              const newMeta = Object.keys(meta).find(tag => {
+                if (tag === slot.data.attrs.meta) {
                   const content = meta[tag];
-                  newEl = createElement(el.tag, {
+                  return createElement(slot.tag, {
                     props: { value: content, innerHTML: content },
                     domProps: { innerHTML: content }
                   });
                 }
-              }
-              newContent.push(newEl);
-            });
+              });
+              if (newMeta) return newMeta;
+            }
           } else {
-            newContent.push(el);
+            return slot;
           }
         });
       }
-      _this.metaData = newContent;
+      _this.metaData = newContent.filter(meta => meta);
     }
   },
 
@@ -255,7 +254,7 @@ export default {
 
     this.$emit("rendered", outHtml);
 
-    let outMeta = _this.renderMeta(this.md.meta, this.$slots, createElement);
+    _this.renderMeta(this.md.meta, this.$slots, createElement);
 
     if (this.$props.meta) {
       return createElement("div", this.metaData);
@@ -270,10 +269,10 @@ export default {
 
   beforeMount() {
     if (this.$slots.default && !this.$props.meta) {
-			this.sourceData = "";
-			this.$slots.default.forEach(slot => {
-        this.sourceData += slot.text;				
-			})
+      this.sourceData = "";
+      this.$slots.default.forEach(slot => {
+        this.sourceData += slot.text;
+      });
     }
 
     this.$watch("source", () => {

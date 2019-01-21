@@ -152,28 +152,27 @@ var script = {
     renderMeta: function renderMeta(meta$$1, slots, createElement) {
       var _this = this;
       var newContent = [];
-      if (Object.keys(meta$$1).length > 0 && slots.default) {
-        slots.default.forEach(function (el) {
-          if (el.data) {
-            Object.keys(meta$$1).forEach(function (tag) {
-              var newEl;
-              if (el.data.attrs) {
-                if (tag === el.data.attrs.meta) {
+      if (Object.keys(meta$$1).length && slots.default) {
+        newContent = slots.default.map(function (slot) {
+          if (slot.data) {
+            var newMeta = Object.keys(meta$$1).find(function (tag) {
+              if (slot.data.attrs) {
+                if (tag === slot.data.attrs.meta) {
                   var content = meta$$1[tag];
-                  newEl = createElement(el.tag, {
+                  return createElement(slot.tag, {
                     props: { value: content, innerHTML: content },
                     domProps: { innerHTML: content }
                   });
                 }
               }
-              newContent.push(newEl);
             });
+            if (newMeta) { return newMeta; }
           } else {
-            newContent.push(el);
+            return slot;
           }
         });
       }
-      _this.metaData = newContent;
+      _this.metaData = newContent.filter(function (meta$$1) { return meta$$1; });
     }
   },
 
@@ -255,7 +254,7 @@ var script = {
 
     this.$emit("rendered", outHtml);
 
-    var outMeta = _this.renderMeta(this.md.meta, this.$slots, createElement);
+    _this.renderMeta(this.md.meta, this.$slots, createElement);
 
     if (this.$props.meta) {
       return createElement("div", this.metaData);
@@ -272,10 +271,10 @@ var script = {
     var this$1 = this;
 
     if (this.$slots.default && !this.$props.meta) {
-			this.sourceData = "";
-			this.$slots.default.forEach(function (slot) {
-        this$1.sourceData += slot.text;				
-			});
+      this.sourceData = "";
+      this.$slots.default.forEach(function (slot) {
+        this$1.sourceData += slot.text;
+      });
     }
 
     this.$watch("source", function () {
@@ -369,7 +368,7 @@ function normalizeComponent(compiledTemplate, injectStyle, defaultExport, scopeI
 /* script */
 var __vue_script__ = script;
 // For security concerns, we use only base name in production mode. See https://github.com/vuejs/rollup-plugin-vue/issues/258
-script.__file = "/Users/silvandiepen/repos/_packages/sil-markdown/src/sil-markdown.vue";
+script.__file = "/Users/dennisdipsaus/Documents/Projects/sil-markdown/src/sil-markdown.vue";
 
 /* template */
 
