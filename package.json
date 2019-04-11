@@ -1,6 +1,6 @@
 {
 	"name": "@sil/markdown",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"main": "dist/sil-markdown.umd.js",
 	"module": "dist/sil-markdown.esm.js",
 	"unpkg": "dist/sil-markdown.min.js",
