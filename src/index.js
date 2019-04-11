@@ -1,4 +1,5 @@
 // Import vue component
+/* eslint-disable */
 import component from './sil-markdown.vue';
 
 // install function executed by Vue.use()
